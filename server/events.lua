@@ -124,30 +124,6 @@ end)
 
 -- Callback Events --
 
--- Client Callback
-RegisterNetEvent('QBCore:Server:TriggerClientCallback', function(name, ...)
-    local ClientCallback = QBCore.ClientCallbacks[name .. source]
-    if ClientCallback then
-        ClientCallback.promise:resolve(...)
-
-        if ClientCallback.callback then
-            ClientCallback.callback(...)
-        end
-
-        QBCore.ClientCallbacks[name .. source] = nil
-    end
-end)
-
--- Server Callback
-RegisterNetEvent('QBCore:Server:TriggerCallback', function(name, ...)
-    if not QBCore.ServerCallbacks[name] then return end
-
-    local src = source
-
-    QBCore.ServerCallbacks[name](src, function(...)
-        TriggerClientEvent('QBCore:Client:TriggerCallback', src, name, ...)
-    end, ...)
-end)
 
 -- Player
 

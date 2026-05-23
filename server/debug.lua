@@ -35,16 +35,13 @@ RegisterNetEvent('QBCore:DebugSomething', function(tbl, indent, resource)
 end)
 
 function QBCore.Debug(tbl, indent)
-    local resource = GetInvokingResource() or 'qb-core'
-    print(('^4[ %s : DEBUG]^0'):format(resource))
-    tPrint(tbl, indent)
-    print('^4[ END DEBUG ]^0')
+    exports['qb-lib']:PrintDebug(tbl, indent)
 end
 
 function QBCore.ShowError(resource, msg)
-    print(('^1[%s:ERROR]^0 %s'):format(resource, msg))
+    exports['qb-lib']:PrintError(resource, msg)
 end
 
 function QBCore.ShowSuccess(resource, msg)
-    print(('^2[%s:LOG]^0 %s'):format(resource, msg))
+    exports['qb-lib']:PrintSuccess(resource, msg)
 end

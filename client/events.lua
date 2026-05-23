@@ -193,37 +193,7 @@ RegisterNetEvent('QBCore:Client:OnPlayerUpdated', function(key, val)
     end
 end)
 
-RegisterNetEvent('QBCore:Notify', function(text, type, length, icon)
-    QBCore.Functions.Notify(text, type, length, icon)
-end)
-
-RegisterNUICallback('getNotifyConfig', function(_, cb)
-    cb(QBCore.Config.Notify)
-end)
-
 -- Callback Events --
-
--- Client Callback
-RegisterNetEvent('QBCore:Client:TriggerClientCallback', function(name, ...)
-    if not QBCore.ClientCallbacks[name] then return end
-
-    QBCore.ClientCallbacks[name](function(...)
-        TriggerServerEvent('QBCore:Server:TriggerClientCallback', name, ...)
-    end, ...)
-end)
-
--- Server Callback
-RegisterNetEvent('QBCore:Client:TriggerCallback', function(name, ...)
-    if QBCore.ServerCallbacks[name] then
-        QBCore.ServerCallbacks[name].promise:resolve(...)
-
-        if QBCore.ServerCallbacks[name].callback then
-            QBCore.ServerCallbacks[name].callback(...)
-        end
-
-        QBCore.ServerCallbacks[name] = nil
-    end
-end)
 
 -- Me command
 

@@ -452,35 +452,14 @@ end
 ---@param cb function
 ---@param ... any
 function QBCore.Functions.TriggerClientCallback(name, source, ...)
-    if not source then return end
-    local cb = nil
-    local args = { ... }
-
-    if QBCore.Shared.IsFunction(args[1]) then
-        cb = args[1]
-        table.remove(args, 1)
-    end
-
-    QBCore.ClientCallbacks[name .. source] = {
-        callback = cb,
-        promise = promise.new()
-    }
-
-    TriggerClientEvent('QBCore:Client:TriggerClientCallback', source, name, table.unpack(args))
-
-    if cb == nil then
-        Citizen.Await(QBCore.ClientCallbacks[name .. source].promise)
-        local value = QBCore.ClientCallbacks[name .. source].promise.value
-        QBCore.ClientCallbacks[name .. source] = nil
-        return value
-    end
+    return exports['qb-lib']:TriggerClientCallback(name, source, ...)
 end
 
 ---Create Server Callback
 ---@param name string
 ---@param cb function
 function QBCore.Functions.CreateCallback(name, cb)
-    QBCore.ServerCallbacks[name] = cb
+    return exports['qb-lib']:CreateCallback(name, cb)
 end
 
 -- Items
@@ -729,7 +708,7 @@ end
 ---@param type string
 ---@param length number
 function QBCore.Functions.Notify(source, text, type, length)
-    TriggerClientEvent('QBCore:Notify', source, text, type, length)
+    exports['qb-lib']:Notify(source, text, type, length)
 end
 
 for functionName, func in pairs(QBCore.Functions) do
